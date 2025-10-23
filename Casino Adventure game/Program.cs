@@ -14,6 +14,7 @@ namespace Casino_Adventure_Game
         {
             string suit;
             int rank;
+
             static Random rnd = new Random();
             static int HEIGHT;
             static int WIDTH;
@@ -24,104 +25,66 @@ namespace Casino_Adventure_Game
             static void border() //Prints pretty border
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write(@".--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--.
-/ .. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \
-\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \
- \/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/
- / /\/ /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /\/
-/ /\ \/`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'\ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                        /\ \/ /
- \/ /\ \                                                                                                                                                      / /\/ /
- / /\/ /                                                                                                                                                      \ \/ /\
-/ /\ \/                                                                                                                                                        \ \/\ \
-\ \/\ \                                                                                                                                                       /\ \/ /
-/ /\/ /                                                                                                                                                       \ \/ /\
-\/ /\ \                                                                                                                                                       /\ \/ /
-/ /\ \/`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--/\ \/ /
-\/ /\/ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ /\/ /
-/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\/ /\
-\/ /\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \ \/\ \/\ \
- \ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ / `' /
-  `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`-");
+                Console.Write(".--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--.\n/ .. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\\n\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\\n \\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/\n / /\\/ /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /\\/\n/ /\\ \\/`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'\\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                        /\\ \\/ /\n \\/ /\\ \\                                                                                                                                                      / /\\/ /\n / /\\/ /                                                                                                                                                      \\ \\/ /\\\n/ /\\ \\/                                                                                                                                                        \\ \\/\\ \\\n\\ \\/\\ \\                                                                                                                                                       /\\ \\/ /\n/ /\\/ /                                                                                                                                                       \\ \\/ /\\\n\\/ /\\ \\                                                                                                                                                       /\\ \\/ /\n/ /\\ \\/`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--/\\ \\/ /\n\\/ /\\/ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ /\\/ /\n/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\/ /\\\n\\/ /\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\/\\ \\ \\/\\ \\/\\ \\\n \\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ / `' /\n  `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`-");
             }
             static void displayCard(string card)
             {
-                type("The ", 75);
+                type("The ", 50);
                 switch (card.Substring(1, 2))
                 {
                     case " 2":
-                        type("2 of", 75);
+                        type("2 of", 50);
                         break;
                     case " 3":
-                        type("3 of", 75);
+                        type("3 of", 50);
                         break;
                     case " 4":
-                        type("4 of", 75);
+                        type("4 of", 50);
                         break;
                     case " 5":
-                        type("5 of", 75);
+                        type("5 of", 50);
                         break;
                     case " 6":
-                        type("6 of", 75);
+                        type("6 of", 50);
                         break;
                     case " 7":
-                        type("7 of", 75);
+                        type("7 of", 50);
                         break;
                     case " 8":
-                        type("8 of", 75);
+                        type("8 of", 50);
                         break;
                     case " 9":
-                        type("9 of", 75);
+                        type("9 of", 50);
                         break;
                     case "10":
-                        type("10 of", 75);
+                        type("10 of", 50);
                         break;
                     case " J":
-                        type("Jack of", 75);
+                        type("Jack of", 50);
                         break;
                     case " Q":
-                        type("Queen of", 75);
+                        type("Queen of", 50);
                         break;
                     case " K":
-                        type("King of", 75);
+                        type("King of", 50);
                         break;
                     case " A":
-                        type("Ace of", 75);
+                        type("Ace of", 50);
                         break;
                 }
                 switch (card[0])
                 {
                     case 'S':
-                        type(" Spades", 75);
+                        type(" Spades", 50);
                         break;
                     case 'C':
-                        type(" Clubs", 75);
+                        type(" Clubs", 50);
                         break;
                     case 'D':
-                        type(" Diamonds", 75);
+                        type(" Diamonds", 50);
                         break;
                     case 'H':
-                        type(" Hearts", 75);
+                        type(" Hearts", 50);
                         break;
                 }
             }
@@ -188,14 +151,14 @@ Press any key to continue:");
 
                 border();
                 Console.SetCursorPosition(10, 7);
-                type("Welcome to the virtual casino!", 75);
+                type("Welcome to the virtual casino!", 50);
 
                 bool valid = false;
                 int age;
                 while (!valid)
                 {
                     Console.SetCursorPosition(10, 9);
-                    type("Please enter your age to continue:", 75);
+                    type("Please enter your age to continue:", 50);
                     try
                     {
                         Console.SetCursorPosition(10, 10);
@@ -203,7 +166,7 @@ Press any key to continue:");
                         if (age < 18)
                         {
                             Console.SetCursorPosition(10, 12);
-                            type("Oh no! You need to be 18+ to continue", 75);
+                            type("Oh no! You need to be 18+ to continue", 50);
 
 
                             clear(10, 12, 100, 13);
@@ -211,7 +174,7 @@ Press any key to continue:");
                         else
                         {
                             Console.SetCursorPosition(10, 12);
-                            type("Great!", 75);
+                            type("Great!", 50);
                             valid = true;
                             System.Threading.Thread.Sleep(1000);
                         }
@@ -221,21 +184,21 @@ Press any key to continue:");
                         Console.SetCursorPosition(10, 9);
                         Console.Write("                                  ");
                         Console.SetCursorPosition(10, 9);
-                        type("Oops that's not a number", 75);
+                        type("Oops that's not a number", 50);
                         System.Threading.Thread.Sleep(300);
                     }
                     clear(10, 9, 100, 12);
                 }
 
                 Console.SetCursorPosition(10, 9);
-                type("Now, enter your name:", 75);
+                type("Now, enter your name:", 50);
                 Console.SetCursorPosition(10, 10);
                 NAME = Console.ReadLine();
                 Console.SetCursorPosition(10, 12);
                 temp = "Hello, " + NAME + "!";
-                type(temp, 75);
+                type(temp, 50);
                 Console.SetCursorPosition(10, 14);
-                type($"You have £{balance}, you only need to earn £1000 to leave!", 75);
+                type($"You have £{balance}, you only need to earn £1000 to leave!", 50);
 
                 System.Threading.Thread.Sleep(2000);
                 clearBorder();
@@ -243,9 +206,9 @@ Press any key to continue:");
             static string menu()
             {
                 Console.SetCursorPosition(10, 7);
-                type($"You currently have £{balance}", 75);
+                type($"You currently have £{balance}", 50);
                 Console.SetCursorPosition(10, 9);
-                type($"What would you like to do, {NAME}?", 75);
+                type($"What would you like to do, {NAME}?", 50);
                 Console.SetCursorPosition(10, 11);
                 Console.Write("[1] - Slot machine");
                 Console.SetCursorPosition(10, 12);
@@ -279,7 +242,7 @@ Press any key to continue:");
                         return choice;
                     default:
                         Console.SetCursorPosition(10, 20);
-                        type("That wasn't an option", 75);
+                        type("That wasn't an option", 50);
                         type("...", 500);
                         return "fail";
                 }
@@ -314,7 +277,7 @@ Press any key to continue:");
                 while (!valid)
                 {
                     Console.SetCursorPosition(10, 15);
-                    type($"You currently have £{balance}, it costs £1 per play, how much money do you want to put in?", 75);
+                    type($"You currently have £{balance}, it costs £1 per play, how much money do you want to put in?", 50);
                     Console.SetCursorPosition(10, 16);
                     Console.Write("£");
 
@@ -328,7 +291,7 @@ Press any key to continue:");
                         else
                         {
                             Console.SetCursorPosition(10, 18);
-                            type("Uh oh! You're too poor!", 75);
+                            type("Uh oh! You're too poor!", 50);
                             System.Threading.Thread.Sleep(1000);
 
                         }
@@ -336,7 +299,7 @@ Press any key to continue:");
                     catch
                     {
                         Console.SetCursorPosition(10, 18);
-                        type("Uh oh! That's not a number!", 75);
+                        type("Uh oh! That's not a number!", 50);
                         System.Threading.Thread.Sleep(1000);
                     }
                     clear(10, 15, 100, 18);
@@ -438,42 +401,42 @@ Press any key to continue:");
                         Console.SetCursorPosition(10, 15);
                         if (slot1 == "D:" && slot2 == "D:" && slot3 == "D:")
                         {
-                            type("Congratulations you won £10!", 75);
+                            type("Congratulations you won £10!", 50);
                             balance += 10;
                         }
                         else if (slot1 == "):" && slot2 == "):" && slot3 == "):")
                         {
-                            type("Congratulations you won £15!", 75);
+                            type("Congratulations you won £15!", 50);
                             balance += 15;
                         }
                         else if (slot1 == ":O" && slot2 == ":O" && slot3 == ":O")
                         {
-                            type("Congratulations you won £20!", 75);
+                            type("Congratulations you won £20!", 50);
                             balance += 20;
                         }
                         else if (slot1 == ":)" && slot2 == ":)" && slot3 == ":)")
                         {
-                            type("Congratulations you won £50!", 75);
+                            type("Congratulations you won £50!", 50);
                             balance += 50;
                         }
                         else if (slot1 == ":D" && slot2 == ":D" && slot3 == ":D")
                         {
-                            type("Congratulations you won £100!", 75);
+                            type("Congratulations you won £100!", 50);
                             balance += 100;
                         }
                         else if (slot1 == "££" || slot2 == "££" || slot3 == "££")
                         {
-                            type("Congratulations you won £50!", 75);
+                            type("Congratulations you won £50!", 50);
                             balance += 50;
                         }
                         else if (slot1 == "££" && slot2 == "££" && slot3 == "££")
                         {
-                            type("Congratulations you won £1000!", 75);
+                            type("Congratulations you won £1000!", 50);
                             balance += 1000;
                         }
                         else if (slot1 == "££" && slot2 == "££" || slot1 == "££" && slot3 == "££" || slot2 == "££" && slot3 == "££")
                         {
-                            type("Congratulations you won £300!", 75);
+                            type("Congratulations you won £300!", 50);
                             balance += 300;
                         }
                         else
@@ -500,16 +463,16 @@ Press any key to continue:");
                 int handValue = 0;
                 int bet = 0;
                 Console.SetCursorPosition(10, 7);
-                type("Welcome to the blackjack table!", 75);
+                type("Welcome to the blackjack table!", 50);
                 bool valid = false;
                 while (!valid)
                 {
                     try
                     {
                         Console.SetCursorPosition(10, 9);
-                        type($"You currently have £{balance}", 75);
+                        type($"You currently have £{balance}", 50);
                         Console.SetCursorPosition(10, 11);
-                        type("How much would you like to bet?", 75);
+                        type("How much would you like to bet?", 50);
                         Console.SetCursorPosition(10, 13);
                         Console.Write("£");
 
@@ -521,18 +484,18 @@ Press any key to continue:");
                         else if (bet < 0)
                         {
                             Console.SetCursorPosition(10, 15);
-                            type("Oh no that's a negative number!", 75);
+                            type("Oh no that's a negative number!", 50);
                         }
                         else
                         {
                             Console.SetCursorPosition(10, 15);
-                            type("Oh no, you are too poor to bet that much!", 75);
+                            type("Oh no, you are too poor to bet that much!", 50);
                         }
                     }
                     catch
                     {
                         Console.SetCursorPosition(10, 15);
-                        type("Oh no! You forgot what a number was!", 75);
+                        type("Oh no! You forgot what a number was!", 50);
                     }
                     System.Threading.Thread.Sleep(1000);
                     clear(10, 9, 100, 20);
@@ -560,7 +523,7 @@ Press any key to continue:");
                     }
                 }
                 Console.SetCursorPosition(10, 7);
-                type("You have:", 75);
+                type("You have:", 50);
                 Console.SetCursorPosition(10, 8);
                 displayCard(hand[0]);
                 Console.SetCursorPosition(10, 9);
@@ -574,7 +537,7 @@ Press any key to continue:");
                 while (playing && count < 6)
                 {
                     Console.SetCursorPosition(10, 14);
-                    type("What would you like to do?", 75);
+                    type("What would you like to do?", 50);
                     Console.SetCursorPosition(10, 16);
                     Console.Write("[1] Hit");
                     Console.SetCursorPosition(10, 17);
@@ -593,7 +556,7 @@ Press any key to continue:");
                         else
                         {
                             Console.SetCursorPosition(10, 21);
-                            type("Oh no! That wasn't an option! Try reading next time!", 75);
+                            type("Oh no! That wasn't an option! Try reading next time!", 50);
                         }
                         System.Threading.Thread.Sleep(500);
                         clear(10, 19, 100, 21);
@@ -620,7 +583,7 @@ Press any key to continue:");
                             playing = false;
                             bust = true;
                             Console.SetCursorPosition(10, 14);
-                            type("Oh no! You've gone bust!", 75);
+                            type("Oh no! You've gone bust!", 50);
                         }
                     }
                     else
@@ -648,27 +611,27 @@ Press any key to continue:");
                     Console.SetCursorPosition(10, 14);
                     if (dCount == 5)
                     {
-                        type("The dealer got a five card trick, you loose...", 75);
+                        type("The dealer got a five card trick, you loose...", 50);
                         win = false;
                     }
                     else if (count == 6)
                     {
-                        type("You got a five card trick, you win!", 75);
+                        type("You got a five card trick, you win!", 50);
                         win = true;
                     }
                     else if (dealer > 21)
                     {
-                        type("The dealer went bust, you win!", 75);
+                        type("The dealer went bust, you win!", 50);
                         win = true;
                     }
                     else if (dealer >= handValue)
                     {
-                        type($"The dealer stuck on {dealer}, you loose...", 75);
+                        type($"The dealer stuck on {dealer}, you loose...", 50);
                         win = false;
                     }
                     else if (dealer < handValue)
                     {
-                        type($"The dealer stuck on {dealer}, you win!", 75);
+                        type($"The dealer stuck on {dealer}, you win!", 50);
                         win = true;
                     }
                 }
@@ -685,6 +648,20 @@ Press any key to continue:");
             {
                 string[] deck1 = { "S 2", "C 2", "D 2", "H 2", "S 3", "C 3", "D 3", "H 3", "S 4", "C 4", "D 4", "H 4", "S 5", "C 5", "D 5", "H 5", "S 6", "C 6", "D 6", "H 6", "S 7", "C 7", "D 7", "H 7", "S 8", "C 8", "D 8", "H 8", "S 9", "C 9", "D 9", "H 9", "S10", "C10", "D10", "H10", "S J", "C J", "D J", "H J", "S Q", "C Q", "D Q", "H Q", "S K", "C K", "D K", "H K", "S A", "C A", "D A", "H A" };
                 Card[] deck = new Card[52];
+                string[] hand1 = new string[2];
+                Card[] hand = new Card[2];
+                string[] river1 = new string[5];
+                Card[] river = new Card[5];
+                string[,] aiHand1 = new string[3, 2];
+                Card[,] aiHand = new Card[3, 2];
+                int temps;
+                bool playing = true;
+
+                for (int i = 0; i < 52; i++)
+                {
+                    deck[i] = new Card();
+                }
+
                 for (int i = 0; i < 52; i++)
                 {
                     switch (deck1[i].Substring(1, 2))
@@ -749,12 +726,12 @@ Press any key to continue:");
 
                 border();
                 Console.SetCursorPosition(10, 7);
-                type("Welcome to the poker table!", 75);
+                type("Welcome to the poker table!", 50);
                 Console.SetCursorPosition(10, 9);
-                type($"You have £{balance}, there are 3 others at the table", 75);
+                type($"You have £{balance}, there are 3 others at the table", 50);
                 int pool = 10 * rnd.Next(1, 11);
                 Console.SetCursorPosition(10, 11);
-                type($"The buy in is £{pool}, do you want to play? Y/N", 75);
+                type($"The buy in is £{pool}, do you want to play? Y/N", 50);
                 bool valid = false;
                 string choice = " ";
                 while (!valid)
@@ -768,13 +745,35 @@ Press any key to continue:");
                     else
                     {
                         Console.SetCursorPosition(10, 14);
-                        type("Oh no! I think you pressed enter too quickly!", 75);
+                        type("Oh no! I think you pressed enter too quickly!", 50);
                     }
                     System.Threading.Thread.Sleep(1000);
                     clear(10, 12, 100, 14);
                 }
+                clear(10, 7, 100, 14);
+                if (choice.ToUpper() == "Y")
+                {
+                    while (playing)
+                    {
+                        balance -= pool;
+                        pool *= 4;
+                        Console.SetCursorPosition(10, 7);
+                        type($"You have £{balance}", 50);
+                        Console.SetCursorPosition(10, 9);
+                        type("You have:", 50);
+                        Console.SetCursorPosition(10, 10);
+                        temps = rnd.Next(0, 52);
+                        hand1[0] = deck1[temps];
+                        hand[0] = deck[temps];
+                        displayCard(hand1[0]);
 
 
+
+
+
+                    }
+
+                }
             }
 
             static void roulette()
@@ -825,7 +824,7 @@ Press any key to continue:");
                     {
                         clearBorder();
                         Console.SetCursorPosition(10, 7);
-                        type("Uh oh", 75);
+                        type("Uh oh", 50);
                         type("...", 1000);
                         Console.SetCursorPosition(10, 9);
                         type("You are broke", 150);
