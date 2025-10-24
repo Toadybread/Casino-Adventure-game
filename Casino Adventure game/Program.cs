@@ -666,19 +666,31 @@ Press any key to continue:");
                 {
                     try
                     {
-                        Console.SetCursorPosition(10, 27);
-                        choice = int.Parse(Console.ReadLine());
-                        if (choice == 1 || choice == 2 || choice == 3)
+                        if (balance > 0)
                         {
-                            valid = true;
+                            Console.SetCursorPosition(10, 27);
+                            choice = int.Parse(Console.ReadLine());
+                            if (choice == 1 || choice == 2 || choice == 3)
+                            {
+                                valid = true;
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 29);
+                                type("That's not an option...", 50);
+                            }
                         }
                         else
                         {
+                            Console.SetCursorPosition(10, 27);
+                            Console.ReadLine();
                             Console.SetCursorPosition(10, 29);
-                            type("That's not an option...", 50);
+                            type("Nevermind, you have no money", 50);
+                            choice = 4;
+                            valid = true;
                         }
                     }
-                    catch 
+                    catch
                     {
                         Console.SetCursorPosition(10, 29);
                         type("That's not an option...", 50);
@@ -689,40 +701,193 @@ Press any key to continue:");
                 clear(10, 18, 100, 29);
                 return choice;
             }
-            static int aiRaise(int pool)
+            static int playerResponse(int raise)
             {
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                Console.SetCursorPosition(10, 18);
+                type($"You have £{balance}", 50);
+                Console.SetCursorPosition(10, 19);
+                type($"The ai raised by £{raise}", 50);
+                Console.SetCursorPosition(10, 21);
+                Console.Write("Do you want to:");
+                Console.SetCursorPosition(10, 23);
+                Console.Write("[1] - Check");
+                Console.SetCursorPosition(10, 24);
+                Console.Write("[2] - Raise");
+                Console.SetCursorPosition(10, 25);
+                Console.Write("[3] - Fold");
+                bool valid = false;
+                int choice = 0;
+                while (!valid)
+                {
+                    try
+                    {
+                        if (balance > 0)
+                        {
+                            Console.SetCursorPosition(10, 27);
+                            choice = int.Parse(Console.ReadLine());
+                            if (choice == 1 || choice == 2 || choice == 3)
+                            {
+                                valid = true;
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 29);
+                                type("That's not an option...", 50);
+                            }
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(10, 27);
+                            Console.ReadLine();
+                            Console.SetCursorPosition(10, 29);
+                            type("Nevermind, you have no money", 50);
+                            choice = 4;
+                            valid = true;
+                        }
+                    }
+                    catch
+                    {
+                        Console.SetCursorPosition(10, 29);
+                        type("That's not an option...", 50);
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                    clear(10, 27, 100, 29);
+                }
+                clear(10, 18, 100, 29);
+                return choice;
+            }
+            static int aiRaise(int pool, int ai)
+            {
+                System.Threading.Thread.Sleep(1000);
+                int raise = rnd.Next(1, 100);
+                int temps = 0;
+                switch (ai)
+                {
+                    case 1:
+                        type($" by {raise}", 50);
+
+                        if (aiHand1[1, 0] != "XXX")
+                        {
+                            temps = rnd.Next(1, 100);
+                            if (temps < 80)
+                            {
+                                Console.SetCursorPosition(10, 20);
+                                type("Ai 2 calls", 50);
+                                pool += raise;
+                                System.Threading.Thread.Sleep(500);
+                            }
+                            else if (temps < 90)
+                            {
+                                Console.SetCursorPosition(10, 20);
+                                type("Ai 2 raises", 50);
+                                pool += raise;
+                                pool = aiRaise(pool, 2, raise);
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 20);
+                                type("Ai 2 folds", 50);
+                                aiHand1[1, 0] = "XXX";
+                                System.Threading.Thread.Sleep(500);
+                            }
+                        }
+                        if (aiHand1[2, 0] != "XXX" && (temps >= 90 || temps < 80))
+                        {
+                            temps = rnd.Next(1, 100);
+                            if (temps < 80)
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 calls", 50);
+                                pool += raise;
+                                System.Threading.Thread.Sleep(500);
+                            }
+                            else if (temps < 90)
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 raises", 50);
+                                pool += raise;
+                                pool = aiRaise(pool, 3);
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 folds", 50);
+                                aiHand1[2, 0] = "XXX";
+                                System.Threading.Thread.Sleep(500);
+                            }
+                        }
+                        clear(10, 18, 100, 22);
+                        switch (playerResponse(int pool, int raise))
+                        {
+                            case 1:
+                                balance -= raise;
+                                pool += raise
+                            case 2:
+                                pool = raise();
+                            case 3:
+                                
+                        }
+                        break;
+                    case 2:
+                        type($" by {raise}", 50);
+                        if (aiHand1[2, 0] != "XXX")
+                        {
+                            temps = rnd.Next(1, 100);
+                            if (temps < 80)
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 calls", 50);
+                                pool += raise;
+                                System.Threading.Thread.Sleep(500);
+                            }
+                            else if (temps < 90)
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 raises", 50);
+                                pool += raise;
+                                pool = aiRaise(pool, 3);
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 22);
+                                type("Ai 3 folds", 50);
+                                aiHand1[2, 0] = "XXX";
+                                System.Threading.Thread.Sleep(500);
+                            }
+                        }
+
+                        
+
+                        break;
+                    case 3:
+                        
+
+                        break;
+                }
                 return pool;
             }
-            static int aiRaise(int pool, int raise)
+            static int aiRaise(int pool, int ai, int raise)
             {
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 return pool;
             }
-            static int raise(int pool)
+            static int raise(int pool, int pRaise)
             {
+                pool += pRaise;
                 int temps = 0;
                 bool valid = false;
                 Console.SetCursorPosition(10, 18);
@@ -743,6 +908,7 @@ Press any key to continue:");
                         {
                             pool += raise;
                             balance -= raise;
+                            valid = true;
                         }
                         else
                         {
@@ -758,6 +924,7 @@ Press any key to continue:");
                     System.Threading.Thread.Sleep(1000);
                     clear(10, 22, 100, 24);
                 }
+                raise += pRaise;
                 clear(10, 18, 100, 24);
                 if (aiHand1[0, 0] != "XXX")
                 {
@@ -774,7 +941,7 @@ Press any key to continue:");
                         Console.SetCursorPosition(10, 18);
                         type("Ai 1 raises", 50);
                         pool += raise;
-                        pool = aiRaise(pool, raise);
+                        pool = aiRaise(pool, 1, raise);
                     }
                     else
                     {
@@ -799,7 +966,7 @@ Press any key to continue:");
                         Console.SetCursorPosition(10, 20);
                         type("Ai 2 raises", 50);
                         pool += raise;
-                        pool = aiRaise(pool, raise);
+                        pool = aiRaise(pool, 2, raise);
                     }
                     else
                     {
@@ -814,21 +981,21 @@ Press any key to continue:");
                     temps = rnd.Next(1, 100);
                     if (temps < 80)
                     {
-                        Console.SetCursorPosition(10, 18);
+                        Console.SetCursorPosition(10, 22);
                         type("Ai 3 calls", 50);
                         pool += raise;
                         System.Threading.Thread.Sleep(500);
                     }
                     else if (temps < 90)
                     {
-                        Console.SetCursorPosition(10, 18);
+                        Console.SetCursorPosition(10, 22);
                         type("Ai 3 raises", 50);
                         pool += raise;
-                        pool = aiRaise(pool, raise);
+                        pool = aiRaise(pool, 3);
                     }
                     else
                     {
-                        Console.SetCursorPosition(10, 18);
+                        Console.SetCursorPosition(10, 22);
                         type("Ai 3 folds", 50);
                         aiHand1[2, 0] = "XXX";
                         System.Threading.Thread.Sleep(500);
@@ -842,9 +1009,9 @@ Press any key to continue:");
                 Card[] deck = new Card[52];
                 string[] hand1 = new string[2];
                 Card[] hand = new Card[2];
-                string[] river1 = { "Unrevealed", "Unrevealed", "Unrevealed", "Unrevealed", "Unrevealed"};
+                string[] river1 = { "Unrevealed", "Unrevealed", "Unrevealed", "Unrevealed", "Unrevealed" };
                 Card[] river = new Card[5];
-                
+
                 Card[,] aiHand = new Card[3, 2];
                 int temps;
 
@@ -945,10 +1112,10 @@ Press any key to continue:");
                 clear(10, 7, 100, 14);
                 if (choice.ToUpper() == "Y" || balance >= pool)
                 {
-                    
+
                     balance -= pool;
                     pool *= 4;
-                    
+
                     Console.SetCursorPosition(10, 7);
                     type("You have:", 50);
                     Console.SetCursorPosition(10, 8);
@@ -985,7 +1152,7 @@ Press any key to continue:");
                     type("Unknown", 25);
                     Console.SetCursorPosition(10, 16);
                     type("Unknown", 25);
-                    
+
                     for (int i = 0; i < 3; i++)
                     {
                         valid = false;
@@ -1022,22 +1189,27 @@ Press any key to continue:");
                             case 1:
 
 
+
+
                                 break;
                             case 2:
-                                pool = raise(pool);
+                                pool = raise(pool, 0);
 
                                 break;
                             case 3:
                                 happy = true;
                                 break;
+                            case 4:
+
+                                break;
                         }
                     }
-                    if (temps != 3) 
+                    if (temps != 3)
                     {
-                        
+
                     }
-                    
-                    
+
+
                     System.Threading.Thread.Sleep(1000);
                 }
                 else if (pool > balance)
@@ -1111,6 +1283,3 @@ Press any key to continue:");
         }
     }
 }
-
-
-
