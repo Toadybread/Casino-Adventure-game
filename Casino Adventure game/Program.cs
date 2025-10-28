@@ -721,51 +721,106 @@ Press any key to continue:");
                 int choice = 0;
                 while (!valid)
                 {
-                    try
+                    if (balance > raise)
                     {
-                        if (balance > 0)
+                        try
                         {
-                            Console.SetCursorPosition(10, 27);
-                            choice = int.Parse(Console.ReadLine());
-                            if (choice == 1 || choice == 2 || choice == 3 && balance >= raise)
+                            if (balance > 0)
                             {
-                                valid = true;
-                            }
-                            else if (choice == 2)
-                            {
-                                valid = true;
-                            }
-                            else if (balance < raise)
-                            {
-                                balance = 0;
-                                choice = 4;
-                                valid = true;
+                                Console.SetCursorPosition(10, 27);
+                                choice = int.Parse(Console.ReadLine());
+                                if (choice == 1 || choice == 2 || choice == 3 && balance >= raise)
+                                {
+                                    valid = true;
+                                }
+                                else if (choice == 2)
+                                {
+                                    valid = true;
+                                }
+                                else if (balance < raise)
+                                {
+                                    balance = 0;
+                                    choice = 4;
+                                    valid = true;
+                                }
+                                else
+                                {
+                                    Console.SetCursorPosition(10, 29);
+                                    type("That's not an option...", 50);
+                                }
                             }
                             else
                             {
+                                Console.SetCursorPosition(10, 27);
+                                Console.ReadLine();
                                 Console.SetCursorPosition(10, 29);
-                                type("That's not an option...", 50);
+                                type("Nevermind, you have no money", 50);
+                                choice = 4;
+                                valid = true;
                             }
-                        }
-                        else
-                        {
-                            Console.SetCursorPosition(10, 27);
-                            Console.ReadLine();
-                            Console.SetCursorPosition(10, 29);
-                            type("Nevermind, you have no money", 50);
-                            choice = 4;
-                            valid = true;
-                        }
 
+                        }
+                        catch
+                        {
+                            Console.SetCursorPosition(10, 29);
+                            type("That's not an option...", 50);
+                        }
                     }
-                    catch
+                    else
                     {
-                        Console.SetCursorPosition(10, 29);
-                        type("That's not an option...", 50);
+                        clear(10, 21, 100, 25);
+                        Console.SetCursorPosition(10, 18);
+                        Console.SetCursorPosition(10, 21);
+                        Console.Write("Do you want to:");
+                        Console.SetCursorPosition(10, 23);
+                        Console.Write("[1] - Go all in");
+                        Console.SetCursorPosition(10, 24);
+                        Console.Write("[2] - Fold");
+                        try
+                        {
+                            if (balance > 0)
+                            {
+                                Console.SetCursorPosition(10, 26);
+                                choice = int.Parse(Console.ReadLine());
+
+                                if (choice == 2)
+                                {
+                                    valid = true;
+                                    choice = 3;
+                                }
+                                else if (choice == 1)
+                                {
+                                    choice = 4;
+                                    valid = true;
+                                }
+                                else
+                                {
+                                    Console.SetCursorPosition(10, 29);
+                                    type("That's not an option...", 50);
+                                }
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 27);
+                                Console.ReadLine();
+                                Console.SetCursorPosition(10, 29);
+                                type("Nevermind, you have no money", 50);
+                                choice = 4;
+                                valid = true;
+                            }
+
+                        }
+                        catch
+                        {
+                            Console.SetCursorPosition(10, 29);
+                            type("That's not an option...", 50);
+                        }
                     }
                     System.Threading.Thread.Sleep(1000);
                     clear(10, 27, 100, 29);
                 }
+
+
                 clear(10, 18, 100, 29);
                 return choice;
             }
@@ -842,6 +897,10 @@ Press any key to continue:");
                             case 3:
                                 fold = true;
                                 break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
+                                break;
                         }
                         break;
                     case 2:
@@ -883,6 +942,10 @@ Press any key to continue:");
                                 break;
                             case 3:
                                 fold = true;
+                                break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
                                 break;
                         }
                         if (aiHand1[0, 0] != "XXX")
@@ -927,6 +990,10 @@ Press any key to continue:");
                                 break;
                             case 3:
                                 fold = true;
+                                break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
                                 break;
                         }
                         if (aiHand1[0, 0] != "XXX")
@@ -1056,6 +1123,10 @@ Press any key to continue:");
                             case 3:
                                 fold = true;
                                 break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
+                                break;
                         }
                         break;
                     case 2:
@@ -1097,6 +1168,10 @@ Press any key to continue:");
                                 break;
                             case 3:
                                 fold = true;
+                                break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
                                 break;
                         }
                         if (aiHand1[0, 0] != "XXX")
@@ -1141,6 +1216,10 @@ Press any key to continue:");
                                 break;
                             case 3:
                                 fold = true;
+                                break;
+                            case 4:
+                                pool += balance;
+                                balance = 0;
                                 break;
                         }
                         if (aiHand1[0, 0] != "XXX")
@@ -1715,8 +1794,528 @@ Press any key to continue:");
                         Console.SetCursorPosition(10, 16);
                         displayCard(river1[4]);
                     }
+                    if (!fold)
+                    {
+                        System.Threading.Thread.Sleep(1000);
+                        clear(10, 18, 100, 22);
+                        int[] scores = { -12, -12, -12, -12 };
+                        // High card
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (hand[i].rank > scores[0] + 14)
+                            {
+                                scores[0] = hand[i].rank;
+                            }
+                        }
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (river[i].rank > scores[0] + 14)
+                            {
+                                scores[0] = river[i].rank;
+                            }
+                        }
 
-                    System.Threading.Thread.Sleep(1000);
+                        Card[] pCards = new Card[7];
+                        for (int i = 0; i < 7; i++)
+                        {
+                            if (i < 2)
+                            {
+                                pCards[i] = hand[i];
+                            }
+                            else
+                            {
+                                pCards[i] = river[i - 2];
+                            }
+                        }
+
+                        // Pair
+                        for (int i = 0; i < 7; i++)
+                        {
+                            for (int j = 0; j < 7; j++)
+                            {
+                                if (i != j)
+                                {
+                                    if (pCards[i].rank == pCards[j].rank)
+                                    {
+                                        scores[0] = 1;
+
+                                    }
+                                }
+                            }
+                        }
+
+
+
+                        //Three of a kind
+                        for (int i = 0; i < 7; i++)
+                        {
+                            for (int j = 0; j < 7; j++)
+                            {
+                                for (int k = 0; k < 7; k++)
+                                {
+                                    if (i != j && i != k && j != k)
+                                    {
+                                        if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank)
+                                        {
+                                            scores[0] = 3;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // All unique five card combinations
+                        for (int i = 0; i < 7; i++)
+                        {
+                            for (int j = 0; j < 7; j++)
+                            {
+                                if (i != j)
+                                {
+                                    for (int k = 0; k < 7; k++)
+                                    {
+                                        if (i != k && j != k)
+                                        {
+                                            for (int l = 0; l < 7; l++)
+                                            {
+                                                if (i != l && j != l && k != l)
+                                                {
+                                                    //Two pair
+                                                    if (pCards[i].rank == pCards[j].rank && pCards[k].rank == pCards[l].rank)
+                                                    {
+                                                        if (scores[0] < 2)
+                                                        {
+                                                            scores[0] = 2;
+                                                        }
+                                                    }
+
+
+                                                    // Four of a kind
+                                                    if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank && pCards[i].rank == pCards[l].rank)
+                                                    {
+                                                        if (scores[0] < 7)
+                                                        {
+                                                            scores[0] = 7;
+                                                        }
+                                                    }
+
+
+                                                    for (int m = 0; m < 7; m++)
+                                                    {
+                                                        if (i != m && j != m && k != m && l != m)
+                                                        {
+                                                            // Straight
+                                                            if (pCards[i].rank + 1 == pCards[j].rank)
+                                                            {
+                                                                if (pCards[j].rank + 1 == pCards[k].rank)
+                                                                {
+                                                                    if (pCards[k].rank + 1 == pCards[l].rank)
+                                                                    {
+                                                                        if (pCards[l].rank + 1 == pCards[m].rank)
+                                                                        {
+                                                                            if (scores[0] < 4)
+                                                                            {
+                                                                                scores[0] = 4;
+                                                                            }
+                                                                            //Straight flush
+                                                                            if (pCards[i].suit == pCards[j].suit && pCards[i].suit == pCards[k].suit && pCards[i].suit == pCards[l].suit && pCards[i].suit == pCards[m].suit)
+                                                                            {
+                                                                                if (scores[0] < 8)
+                                                                                {
+                                                                                    scores[0] = 8;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            // Flush
+                                                            if (pCards[i].suit == pCards[j].suit && pCards[i].suit == pCards[k].suit && pCards[i].suit == pCards[l].suit && pCards[i].suit == pCards[m].suit)
+                                                            {
+                                                                if (scores[0] < 5)
+                                                                {
+                                                                    scores[0] = 5;
+                                                                }
+                                                                // Royal flush
+                                                                if (pCards[i].rank == 10 && pCards[j].rank == 11 && pCards[k].rank == 12 && pCards[l].rank == 13 && pCards[m].rank == 14)
+                                                                {
+                                                                    scores[0] = 9;
+                                                                }
+                                                            }
+
+                                                            //Full house
+                                                            if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank && pCards[l].rank == pCards[m].rank)
+                                                            {
+                                                                if (scores[0] < 6)
+                                                                {
+                                                                    scores[0] = 6;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Console.SetCursorPosition(10, 18);
+                        type("You got a ", 50);
+                        switch (scores[0])
+                        {
+                            case -12:
+                                type("wait you shouldn't get this", 50);
+                                break;
+                            case -11:
+                                type("wait you shouldn't get this", 50);
+                                break;
+                            case -10:
+                                type("high card 4! (You are really bad at this)", 50);
+                                break;
+                            case -9:
+                                type("high card 5", 50);
+                                break;
+                            case -8:
+                                type("high card 6", 50);
+                                break;
+                            case -7:
+                                type("high card 7", 50);
+                                break;
+                            case -6:
+                                type("high card 8", 50);
+                                break;
+                            case -5:
+                                type("high card 9", 50);
+                                break;
+                            case -4:
+                                type("high card 10", 50);
+                                break;
+                            case -3:
+                                type("high card Jack", 50);
+                                break;
+                            case -2:
+                                type("high card Queen", 50);
+                                break;
+                            case -1:
+                                type("high card King", 50);
+                                break;
+                            case 0:
+                                type("high card Ace", 50);
+                                break;
+                            case 1:
+                                type("pair", 50);
+                                break;
+                            case 2:
+                                type("two pair", 50);
+                                break;
+                            case 3:
+                                type("three of a kind", 50);
+                                break;
+                            case 4:
+                                type("straight", 50);
+                                break;
+                            case 5:
+                                type("flush", 50);
+                                break;
+                            case 6:
+                                type("full house", 50);
+                                break;
+                            case 7:
+                                type("four of a kind", 50);
+                                break;
+                            case 8:
+                                type("straight flush!", 50);
+                                break;
+                            case 9:
+                                type("royal flush!", 50);
+                                break;
+
+                        }
+
+
+
+                        for (int x = 1; x < 4; x++)
+                        {
+                            if (aiHand1[x - 1, 0] != "XXX")
+                            {
+
+
+                                System.Threading.Thread.Sleep(1000);
+                                // High card
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    if (aiHand[x - 1, i].rank > scores[x] + 14)
+                                    {
+                                        scores[x] = aiHand[x - 1, i].rank;
+                                    }
+                                }
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (river[i].rank > scores[x] + 14)
+                                    {
+                                        scores[x] = river[i].rank;
+                                    }
+                                }
+
+
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    if (i < 2)
+                                    {
+                                        pCards[i] = aiHand[x - 1, i];
+                                    }
+                                    else
+                                    {
+                                        pCards[i] = river[i - 2];
+                                    }
+                                }
+
+                                // Pair
+
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    for (int j = 0; j < 7; j++)
+                                    {
+                                        if (i != j)
+                                        {
+                                            if (pCards[i].rank == pCards[j].rank)
+                                            {
+                                                scores[x] = 1;
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+
+                                //Three of a kind
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    for (int j = 0; j < 7; j++)
+                                    {
+                                        for (int k = 0; k < 7; k++)
+                                        {
+                                            if (i != j && i != k && j != k)
+                                            {
+                                                if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank)
+                                                {
+                                                    scores[x] = 3;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // All unique five card combinations
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    for (int j = 0; j < 7; j++)
+                                    {
+                                        if (i != j)
+                                        {
+                                            for (int k = 0; k < 7; k++)
+                                            {
+                                                if (i != k && j != k)
+                                                {
+                                                    for (int l = 0; l < 7; l++)
+                                                    {
+                                                        if (i != l && j != l && k != l)
+                                                        {
+                                                            //Two pair
+                                                            if (pCards[i].rank == pCards[j].rank && pCards[k].rank == pCards[l].rank)
+                                                            {
+                                                                if (scores[x] < 2)
+                                                                {
+                                                                    scores[x] = 2;
+                                                                }
+                                                            }
+
+
+                                                            // Four of a kind
+                                                            if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank && pCards[i].rank == pCards[l].rank)
+                                                            {
+                                                                if (scores[x] < 7)
+                                                                {
+                                                                    scores[x] = 7;
+                                                                }
+                                                            }
+
+
+                                                            for (int m = 0; m < 7; m++)
+                                                            {
+                                                                if (i != m && j != m && k != m && l != m)
+                                                                {
+                                                                    // Straight
+                                                                    if (pCards[i].rank + 1 == pCards[j].rank)
+                                                                    {
+                                                                        if (pCards[j].rank + 1 == pCards[k].rank)
+                                                                        {
+                                                                            if (pCards[k].rank + 1 == pCards[l].rank)
+                                                                            {
+                                                                                if (pCards[l].rank + 1 == pCards[m].rank)
+                                                                                {
+                                                                                    if (scores[x] < 4)
+                                                                                    {
+                                                                                        scores[x] = 4;
+                                                                                    }
+                                                                                    //Striaght flush
+                                                                                    if (pCards[i].suit == pCards[j].suit && pCards[i].suit == pCards[k].suit && pCards[i].suit == pCards[l].suit && pCards[i].suit == pCards[m].suit)
+                                                                                    {
+                                                                                        if (scores[x] < 8)
+                                                                                        {
+                                                                                            scores[x] = 8;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    // Flush
+                                                                    if (pCards[i].suit == pCards[j].suit && pCards[i].suit == pCards[k].suit && pCards[i].suit == pCards[l].suit && pCards[i].suit == pCards[m].suit)
+                                                                    {
+                                                                        if (scores[x] < 5)
+                                                                        {
+                                                                            scores[x] = 5;
+                                                                        }
+                                                                        // Royal flush
+                                                                        if (pCards[i].rank == 10 && pCards[j].rank == 11 && pCards[k].rank == 12 && pCards[l].rank == 13 && pCards[m].rank == 14)
+                                                                        {
+                                                                            scores[x] = 9;
+                                                                        }
+                                                                    }
+
+                                                                    //Full house
+                                                                    if (pCards[i].rank == pCards[j].rank && pCards[i].rank == pCards[k].rank && pCards[l].rank == pCards[m].rank)
+                                                                    {
+                                                                        if (scores[x] < 6)
+                                                                        {
+                                                                            scores[x] = 6;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Console.SetCursorPosition(10, 20 + (2 * (x - 1)));
+                            type($"Ai {x} ", 50);
+                            switch (scores[x])
+                            {
+                                case -12:
+                                    type("folded", 50);
+                                    break;
+                                case -11:
+                                    type("wait you shouldn't get this", 50);
+                                    break;
+                                case -10:
+                                    type("got a high card 4! (they are really bad at this)", 50);
+                                    break;
+                                case -9:
+                                    type("got a high card 5", 50);
+                                    break;
+                                case -8:
+                                    type("got a high card 6", 50);
+                                    break;
+                                case -7:
+                                    type("got a high card 7", 50);
+                                    break;
+                                case -6:
+                                    type("got a high card 8", 50);
+                                    break;
+                                case -5:
+                                    type("got a high card 9", 50);
+                                    break;
+                                case -4:
+                                    type("got a high card 10", 50);
+                                    break;
+                                case -3:
+                                    type("got a high card Jack", 50);
+                                    break;
+                                case -2:
+                                    type("got a high card Queen", 50);
+                                    break;
+                                case -1:
+                                    type("got a high card King", 50);
+                                    break;
+                                case 0:
+                                    type("got a high card Ace", 50);
+                                    break;
+                                case 1:
+                                    type("got a pair", 50);
+                                    break;
+                                case 2:
+                                    type("got a two pair", 50);
+                                    break;
+                                case 3:
+                                    type("got a three of a kind", 50);
+                                    break;
+                                case 4:
+                                    type("got a straight", 50);
+                                    break;
+                                case 5:
+                                    type("got a flush", 50);
+                                    break;
+                                case 6:
+                                    type("got a full house", 50);
+                                    break;
+                                case 7:
+                                    type("got a four of a kind", 50);
+                                    break;
+                                case 8:
+                                    type("got a straight flush!", 50);
+                                    break;
+                                case 9:
+                                    type("got a royal flush!", 50);
+                                    break;
+
+                            }
+                        }
+
+                        if (scores[0] > scores[1] && scores[0] > scores[2] && scores[0] > scores[3])
+                        {
+                            balance += pool;
+                        }
+                        else if (scores[0] < scores[1] || scores[0] < scores[2] || scores[0] < scores[2])
+                        {
+                            System.Threading.Thread.Sleep(1);
+                        }
+                        else if (scores[0] == scores[1] && scores[0] == scores[3] && scores[0] == scores[3])
+                        {
+                            balance += pool / 4;
+                        }
+
+                        else if (scores[0] == scores[1] && scores[0] == scores[3] && scores[0] != scores[3])
+                        {
+                            balance += pool / 3;
+                        }
+                        else if (scores[0] == scores[1] && scores[0] != scores[3] && scores[0] == scores[3])
+                        {
+                            balance += pool / 3;
+                        }
+                        else if (scores[0] != scores[1] && scores[0] == scores[3] && scores[0] == scores[3])
+                        {
+                            balance += pool / 3;
+                        }
+
+                        else if (scores[0] == scores[1] && scores[0] != scores[3] && scores[0] != scores[3])
+                        {
+                            balance += pool / 2;
+                        }
+                        else if (scores[0] != scores[1] && scores[0] != scores[3] && scores[0] == scores[3])
+                        {
+                            balance += pool / 2;
+                        }
+                        else if (scores[0] != scores[1] && scores[0] == scores[3] && scores[0] != scores[3])
+                        {
+                            balance += pool / 2;
+                        }
+                    }
                 }
                 else if (pool > balance)
                 {
@@ -1724,6 +2323,8 @@ Press any key to continue:");
                     Console.SetCursorPosition(10, 7);
                     type("Oh no it doesn't matter you are too poor anyway...", 50);
                 }
+                System.Threading.Thread.Sleep(5000);
+                clearBorder();
             }
 
             static void roulette()
