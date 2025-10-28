@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 namespace Casino_Adventure_Game
 {
     class Program
@@ -24,7 +27,7 @@ namespace Casino_Adventure_Game
             static string NAME = " ";
             static string temp = " ";
             static bool running = true;
-            static int balance = 100;
+            static int balance = 1000;
             static void border() //Prints pretty border
             {
                 Console.SetCursorPosition(0, 0);
@@ -2329,20 +2332,404 @@ Press any key to continue:");
 
             static void roulette()
             {
+                border();
+                Console.SetCursorPosition(10, 7);
+                type($"Welcome to the roulette wheel! You have £{balance}", 50);
+                Console.SetCursorPosition(10, 9);
+                type("How much would you like to bet?", 50);
+                bool valid = false;
+                int bet = 0;
+                while (!valid)
+                {
+                    Console.SetCursorPosition(10, 11);
+                    Console.Write("£");
+                    try
+                    {
+                        bet = int.Parse(Console.ReadLine());
+                        if (bet <= balance && bet >= 0)
+                        {
+                            valid = true;
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(10, 13);
+                            type("Try entering a valid amount next time...", 50);
+                        }
+                    }
+                    catch
+                    {
+                        Console.SetCursorPosition(10, 13);
+                        type("Oops, you don't know what a number is...", 50);
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                    clear(10, 11, 100, 13);
+                }
 
+                if (bet > 0)
+                {
+                    clear(10, 9, 100, 13);
+                    Console.SetCursorPosition(10, 9);
+                    type("What do you want to bet on?", 50);
+                    Console.SetCursorPosition(10, 10);
+                    Console.Write("[0-36] - bet on a number (36x return)");
+                    Console.SetCursorPosition(10, 11);
+                    Console.Write("[E/O] - bet on even or odd (2x return) (0 is neither even nor odd)");
+                    valid = false;
+                    string choice = " ";
+                    int temps = 0;
+                    while (!valid)
+                    {
+                        Console.SetCursorPosition(10, 13);
+
+                        choice = Console.ReadLine();
+                        choice = choice.ToUpper();
+                        try
+                        {
+                            temps = int.Parse(choice);
+                            if (temps >= 0 && temps <= 36)
+                            {
+                                valid = true;
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 15);
+                                type("Try a number in range next time...", 50);
+                            }
+                        }
+                        catch
+                        {
+                            if (choice == "E" || choice == "O")
+                            {
+                                valid = true;
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(10, 15);
+                                type("I don't even know what you put...", 50);
+                            }
+                        }
+                        System.Threading.Thread.Sleep(1000);
+                        clear(10, 13, 100, 15);
+                    }
+
+                    clearBorder();
+                    Console.SetCursorPosition(10, 7);
+                    Console.Write("0  1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36");
+                    Console.SetCursorPosition(10, 8);
+                    Console.Write("X");
+                    Console.SetCursorPosition(10, 10);
+                    type("Press any key to begin", 50);
+                    Console.ReadKey();
+
+
+                    int amount = rnd.Next(100, 200);
+                    int result = 0;
+                    int delay = (200 - amount) / 2;
+                    for (int i = 1; i < amount; i++)
+                    {
+                        result++;
+                        if (result > 36)
+                        {
+                            result = 0;
+                        }
+                        System.Threading.Thread.Sleep(delay);
+                        delay++;
+                        clear(10, 8, 157, 8);
+                        Console.SetCursorPosition(10, 8);
+                        for (int j = 0; j < result; j++)
+                        {
+                            Console.Write("   ");
+                            if (j > 9)
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                        Console.Write("X");
+                    }
+                    clear(10, 9, 100, 22);
+                    Console.SetCursorPosition(10, 10);
+                    type($"The result was {result}, ", 50);
+                    if (result == 0)
+                    {
+                        type("none", 50);
+                    }
+                    else if (result % 2 == 0)
+                    {
+                        type("even", 50);
+                    }
+                    else
+                    {
+                        type("odd", 50);
+                    }
+                    balance -= bet;
+                    try
+                    {
+                        temps = int.Parse(choice);
+                        if (temps == result)
+                        {
+                            balance += bet * 36;
+                        }
+                    }
+                    catch
+                    {
+                        if (result == 0)
+                        {
+                            System.Threading.Thread.Sleep(1);
+                        }
+                        else if (result % 2 == 0 && choice == "E")
+                        {
+                            balance += bet * 2;
+                        }
+                        else if (result % 2 != 0 && choice == "O")
+                        {
+                            balance += bet * 2;
+                        }
+                    }
+                }
+
+
+                System.Threading.Thread.Sleep(5000);
+            }
+            static void tails()
+            {
+                Console.SetCursorPosition(65, 10);
+                Console.Write("          .:-=-.");
+                Console.SetCursorPosition(65, 11);
+                Console.Write("      -@@@@%**#@@@@+. ");
+                Console.SetCursorPosition(65, 12);
+                Console.Write("    +@@=.         :@@%.");
+                Console.SetCursorPosition(65, 13);
+                Console.Write("  .@@=              :@@:   ");
+                Console.SetCursorPosition(65, 14);
+                Console.Write("  #@=    *##%@###:    %@-  ");
+                Console.SetCursorPosition(65, 15);
+                Console.Write(" -@%        +#        =@*  ");
+                Console.SetCursorPosition(65, 16);
+                Console.Write(" =@+        +#        -@#  ");
+                Console.SetCursorPosition(65, 17);
+                Console.Write(" :@%        +#        =@+  ");
+                Console.SetCursorPosition(65, 18);
+                Console.Write("  *@=       +#       .@@:  ");
+                Console.SetCursorPosition(65, 19);
+                Console.Write("  .#@%.             =@@.  ");
+                Console.SetCursorPosition(65, 20);
+                Console.Write("     :@@%.        .=@@-    ");
+                Console.SetCursorPosition(65, 21);
+                Console.Write("      .+@@@@@@@@@@%:  ");
+            }
+            static void heads()
+            {
+                Console.SetCursorPosition(65, 10);
+                Console.Write("        :#@@@@@@@%-.");
+                Console.SetCursorPosition(65, 11);
+                Console.Write("    .:%@@=:.....:-%@@=. ");
+                Console.SetCursorPosition(65, 12);
+                Console.Write("   .%@*.           .+@@:");
+                Console.SetCursorPosition(65, 13);
+                Console.Write("  :@@:   --.    -=   .#@- ");
+                Console.SetCursorPosition(65, 14);
+                Console.Write(" .%@:    *#.    *%    .@@. ");
+                Console.SetCursorPosition(65, 15);
+                Console.Write(" :@%     *#.....*%     +@= ");
+                Console.SetCursorPosition(65, 16);
+                Console.Write(" :@%     *%-----#%     +@= ");
+                Console.SetCursorPosition(65, 17);
+                Console.Write(" .%@:    *#.    *%    .@@. ");
+                Console.SetCursorPosition(65, 18);
+                Console.Write("  :@%:   +*.    +*   .#@=  ");
+                Console.SetCursorPosition(65, 19);
+                Console.Write("   .%@*.           .+@@:   ");
+                Console.SetCursorPosition(65, 20);
+                Console.Write("    .:@@@=.......-%@@=.   ");
+                Console.SetCursorPosition(65, 21);
+                Console.Write("        -#@@@@@@@%-  ");
             }
             static void coin()
             {
+                border();
+                Console.SetCursorPosition(10, 7);
+                type("Welcome to the coin flip room!", 50);
+                Console.SetCursorPosition(10, 9);
+                type($"You have £{balance}", 50);
+                Console.SetCursorPosition(10, 11);
+                type("Do you want to play? Y/N", 50);
+                bool valid = false;
+                string choice = " ";
+                while (!valid)
+                {
+                    Console.SetCursorPosition(10, 13);
+                    choice = Console.ReadLine();
+                    choice = choice.ToUpper();
+                    if (choice == "Y" || choice == "N")
+                    {
+                        valid = true;
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(10, 15);
+                        type("That wasn't an option...", 50);
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                    clear(10, 13, 100, 15);
+                }
+                clearBorder();
+                if (choice == "Y")
+                {
+                    heads();
+                    Console.SetCursorPosition(10, 23);
+                    type("[H]-heads or [T]-tails?", 50);
+                    valid = false;
+                    while (!valid)
+                    {
+                        Console.SetCursorPosition(10, 25);
+                        choice = Console.ReadLine();
+                        choice = choice.ToUpper();
+                        if (choice == "H" || choice == "T")
+                        {
+                            valid = true;
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(10, 25);
+                            type("That's not an option...", 50);
+                        }
+                        System.Threading.Thread.Sleep(1000);
+                        clear(10, 23, 100, 25);
+                    }
 
+
+                    clear(10, 23, 100, 27);
+                    Console.SetCursorPosition(10, 23);
+                    type("Press any key to continue", 50);
+                    Console.ReadKey();
+                    clear(10, 23, 100, 23);
+
+                    int amount = rnd.Next(10, 20);
+                    int delay = 1000 - amount * 50;
+                    bool head = true;
+                    for (int i = 0; i < amount; i++)
+                    {
+                        clearBorder();
+                        if (head)
+                        {
+                            tails();
+                            head = false;
+                        }
+                        else
+                        {
+                            heads();
+                            head = true;
+                        }
+                        System.Threading.Thread.Sleep(delay);
+                        delay += 50;
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                    if ((head && choice == "H") || (!head && choice == "T"))
+                    {
+                        Console.SetCursorPosition(10, 23);
+                        type("You win!", 50);
+                        balance *= 2;
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(10, 23);
+                        type("You lose...", 50);
+                        balance = 0;
+                    }
+                }
             }
             static void exit()
             {
+                border();
+                if (balance >= 1000)
+                {
+                    Console.SetCursorPosition(10, 7);
+                    type("Are you really sure you want to leave?", 50);
 
+                    Console.SetCursorPosition(10, 9);
+                    type($"You only have £{balance}, you could make more...", 50);
+
+                    Console.SetCursorPosition(10, 11);
+                    type("Leave? Y/N", 50);
+
+                    int leave = 0;
+                    bool valid = false;
+                    string choice = " ";
+                    while (!valid)
+                    {
+                        Console.SetCursorPosition(10, 13);
+                        choice = Console.ReadLine();
+                        choice = choice.ToUpper();
+                        if (choice == "Y" && leave == 3)
+                        {
+                            Console.SetCursorPosition(10, 15);
+                            type("Fine", 50);
+                            type("...", 100);
+                            type(" ", 1000);
+                            type("I'll let you leave", 50);
+                            type("...", 100);
+                            valid = true;
+                        }
+                        else if (choice == "N")
+                        {
+                            Console.SetCursorPosition(10, 15);
+                            type("I always knew you wanted to stay!", 50);
+                            valid = true;
+                        }
+                        else if (choice == "Y")
+                        {
+                            switch (leave)
+                            {
+                                case 0:
+                                    Console.SetCursorPosition(10, 15);
+                                    type("Come on... you don't really want to leave do you?", 50);
+                                    break;
+                                case 1:
+                                    Console.SetCursorPosition(10, 15);
+                                    type("Really? You really don't want to make more money?", 50);
+                                    break;
+                                case 2:
+                                    Console.SetCursorPosition(10, 15);
+                                    type("Please...", 100);
+                                    break;
+                            }
+                            leave++;
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(10, 15);
+                            type("That's not an option...", 50);
+                        }
+                        System.Threading.Thread.Sleep(2000);
+                        clear(10, 13, 100, 15);
+                    }
+                    if (choice == "Y")
+                    {
+                        clearBorder();
+                        Console.SetCursorPosition(10, 7);
+                        System.Threading.Thread.Sleep(2000);
+                        type("Bye", 100);
+                        type("...", 500);
+                        running = false;
+                    }
+                }
+                else
+                {
+                    Console.SetCursorPosition(10, 7);
+                    type("Oh no!", 50);
+                    Console.SetCursorPosition(10, 9);
+                    type($"You need at least £1000 to leave, but you only have £{balance}!", 50);
+                    Console.SetCursorPosition(10, 11);
+                    type("Try again later when you have more money...", 50);
+                    System.Threading.Thread.Sleep(1000);
+                    clearBorder();
+                }
             }
             static void Main(string[] args)
             {
                 startUp();
                 logIn();
+
 
                 string choice;
                 while (running)
