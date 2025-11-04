@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Formats.Asn1;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 namespace Casino_Adventure_Game
 {
     class Program
@@ -27,7 +20,7 @@ namespace Casino_Adventure_Game
             static string NAME = " ";
             static string temp = " ";
             static bool running = true;
-            static int balance = 1000;
+            static int balance = 100;
             static void border() //Prints pretty border
             {
                 Console.SetCursorPosition(0, 0);
