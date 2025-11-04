@@ -610,7 +610,7 @@ Press any key to continue:");
                     Console.SetCursorPosition(10, 14);
                     if (dCount == 5)
                     {
-                        type("The dealer got a five card trick, you loose...", 50);
+                        type("The dealer got a five card trick, you lose...", 50);
                         win = false;
                     }
                     else if (count == 6)
@@ -625,7 +625,7 @@ Press any key to continue:");
                     }
                     else if (dealer >= handValue)
                     {
-                        type($"The dealer stuck on {dealer}, you loose...", 50);
+                        type($"The dealer stuck on {dealer}, you lose...", 50);
                         win = false;
                     }
                     else if (dealer < handValue)
@@ -2770,3 +2770,4 @@ Press any key to continue:");
         }
     }
 }
+
