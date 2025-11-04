@@ -1800,14 +1800,14 @@ Press any key to continue:");
                         {
                             if (hand[i].rank > scores[0] + 14)
                             {
-                                scores[0] = hand[i].rank;
+                                scores[0] = hand[i].rank - 14;
                             }
                         }
                         for (int i = 0; i < 5; i++)
                         {
                             if (river[i].rank > scores[0] + 14)
                             {
-                                scores[0] = river[i].rank;
+                                scores[0] = river[i].rank - 14;
                             }
                         }
 
@@ -2042,14 +2042,14 @@ Press any key to continue:");
                                 {
                                     if (aiHand[x - 1, i].rank > scores[x] + 14)
                                     {
-                                        scores[x] = aiHand[x - 1, i].rank;
+                                        scores[x] = aiHand[x - 1, i].rank - 14;
                                     }
                                 }
                                 for (int i = 0; i < 5; i++)
                                 {
                                     if (river[i].rank > scores[x] + 14)
                                     {
-                                        scores[x] = river[i].rank;
+                                        scores[x] = river[i].rank - 14;
                                     }
                                 }
 
